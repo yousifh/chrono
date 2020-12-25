@@ -13,3 +13,28 @@ Static site generator in Go
 - Posts vs Pages or treat everything the same?
 - How to generate RSS feed?
 - What to do with tags?
+
+## Directory structure
+```
+- config.yaml
+- pages
+    - posts
+        - index.md
+        - post1.md
+        - post2.md
+    - about
+        - index.md
+    - projects
+        - index.md
+- layouts
+    - partials
+        - footer.html
+        - header.html
+    - base.html
+    - posts
+        - index.html
+        - default.html
+- static
+    - images
+    - 404.html
+```
