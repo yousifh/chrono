@@ -10,7 +10,9 @@ import (
 func main() {
 	args := os.Args[1:]
 
-	err := chrono.BuildSite(args[0])
+	c := chrono.NewChrono(args[0])
+
+	err := c.BuildSite()
 	if err != nil {
 		fmt.Println(err.Error())
 	}
