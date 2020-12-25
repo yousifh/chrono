@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/pkg/errors"
 	"gopkg.in/yaml.v2"
 )
 
@@ -26,7 +27,7 @@ func NewChrono(sitePath string) *Chrono {
 func (c *Chrono) BuildSite() error {
 	files, err := ioutil.ReadDir(c.sitePath)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "reading sitePath")
 	}
 
 	for _, file := range files {
@@ -36,7 +37,7 @@ func (c *Chrono) BuildSite() error {
 			err = c.processConfig(file)
 		}
 		if err != nil {
-			return err
+			return errors.Wrap(err, "processing site config")
 		}
 	}
 
@@ -46,14 +47,14 @@ func (c *Chrono) BuildSite() error {
 func (c *Chrono) processConfig(file os.FileInfo) error {
 	data, err := ioutil.ReadFile(filepath.Join(c.sitePath, file.Name()))
 	if err != nil {
-		return err
+		return errors.Wrap(err, "reading site config yaml")
 	}
 
 	m := make(map[interface{}]interface{})
 
 	err = yaml.Unmarshal(data, m)
 	if err != nil {
-		return err
+		return errors.Wrap(err, "unmarshalling site config yaml")
 	}
 
 	for key, val := range m {

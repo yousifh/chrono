@@ -2,4 +2,7 @@ module github.com/yousifh/chrono
 
 go 1.15
 
-require gopkg.in/yaml.v2 v2.4.0
+require (
+	github.com/pkg/errors v0.9.1
+	gopkg.in/yaml.v2 v2.4.0
+)
