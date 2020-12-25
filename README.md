@@ -18,6 +18,7 @@ Static site generator in Go
 ```
 - config.yaml
 - pages
+    - index.md
     - posts
         - index.md
         - post1.md
@@ -27,10 +28,11 @@ Static site generator in Go
     - projects
         - index.md
 - layouts
+    - index.html
+    - base.html
     - partials
         - footer.html
         - header.html
-    - base.html
     - posts
         - index.html
         - default.html
