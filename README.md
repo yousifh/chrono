@@ -28,14 +28,17 @@ Static site generator in Go named after the Starcraft 2 ability [Chrono Boost](h
     - projects
         - index.md
 - layouts
-    - index.html
-    - base.html
-    - partials
+    - _defaults
+        - base.html
+        - index.html (group index page)
+        - default.html (group single page)
+    - _partials
         - footer.html
         - header.html
     - posts
         - index.html
         - default.html
+    - index.html
 - static
     - images
     - 404.html
