@@ -1,5 +1,5 @@
 # chrono
-Static site generator in Go
+Static site generator in Go named after the Starcraft 2 ability [Chrono Boost](https://liquipedia.net/starcraft2/Chrono_Boost)
 
 ## Steps
 
