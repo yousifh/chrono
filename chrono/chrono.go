@@ -15,6 +15,7 @@ import (
 const (
 	config  = "config.yaml"
 	layouts = "layouts"
+	pages   = "pages"
 )
 
 type Chrono struct {
@@ -41,6 +42,8 @@ func (c *Chrono) BuildSite() error {
 			err = c.processConfig(file)
 		case layouts:
 			err = c.processLayouts(file)
+		case pages:
+			err = c.processPages(file)
 		default:
 			err = c.processOther(file)
 		}
@@ -49,7 +52,7 @@ func (c *Chrono) BuildSite() error {
 		}
 	}
 
-	err = c.outputSite()
+	//err = c.outputSite()
 	if err != nil {
 		return errors.Wrap(err, "outputting site")
 	}
@@ -96,6 +99,29 @@ func (c *Chrono) processLayouts(file os.FileInfo) error {
 	c.template = temp
 
 	return nil
+}
+
+func (c *Chrono) processPages(file os.FileInfo) error {
+	pagesPath := filepath.Join(c.sitePath, file.Name())
+	var pages []string
+	err := filepath.Walk(pagesPath, func(path string, info os.FileInfo, err error) error {
+		if err == nil && !info.IsDir() && strings.HasSuffix(info.Name(), ".md") {
+			pages = append(pages, path)
+		}
+		return nil
+	})
+
+	type Data struct {
+		Content string
+	}
+
+	for _, page := range pages {
+		println(page)
+		data := Data{Content: "test"}
+		err = c.template.ExecuteTemplate(os.Stdout, "base.html", data)
+	}
+
+	return err
 }
 
 func (c *Chrono) processOther(file os.FileInfo) error {
