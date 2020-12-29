@@ -19,6 +19,7 @@ const (
 
 type Chrono struct {
 	sitePath string
+	template *template.Template
 }
 
 func NewChrono(sitePath string) *Chrono {
@@ -46,6 +47,11 @@ func (c *Chrono) BuildSite() error {
 		if err != nil {
 			return errors.Wrap(err, "processing site directory")
 		}
+	}
+
+	err = c.outputSite()
+	if err != nil {
+		return errors.Wrap(err, "outputting site")
 	}
 
 	return nil
@@ -87,10 +93,16 @@ func (c *Chrono) processLayouts(file os.FileInfo) error {
 	if err != nil {
 		return errors.Wrap(err, "parsing templates")
 	}
-	return temp.ExecuteTemplate(os.Stdout, "base.html", nil)
+	c.template = temp
+
+	return nil
 }
 
 func (c *Chrono) processOther(file os.FileInfo) error {
 
 	return nil
+}
+
+func (c *Chrono) outputSite() error {
+	return c.template.ExecuteTemplate(os.Stdout, "base.html", nil)
 }
