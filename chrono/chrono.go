@@ -50,14 +50,14 @@ func (c *Chrono) processConfig(file os.FileInfo) error {
 		return errors.Wrap(err, "reading site config yaml")
 	}
 
-	m := make(map[interface{}]interface{})
+	var conf SiteConfig
 
-	err = yaml.Unmarshal(data, m)
+	err = yaml.Unmarshal(data, &conf)
 	if err != nil {
 		return errors.Wrap(err, "unmarshalling site config yaml")
 	}
 
-	for key, val := range m {
+	for key, val := range conf {
 		fmt.Printf("%v - %v\n", key, val)
 	}
 
